@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class register_page extends AppCompatActivity {
-    EditText name, nmorg, email, phone, passwd, cnpasswd;
+    EditText name, email, phone, passwd, cnpasswd;
     Button reg;
     TextView loginpg;
     FirebaseAuth fAuth;
@@ -35,7 +35,7 @@ public class register_page extends AppCompatActivity {
         setContentView(R.layout.activity_register_page);
 
         name = findViewById(R.id.FullName);
-        nmorg = findViewById(R.id.organization);
+
         email = findViewById(R.id.Email);
         phone = findViewById(R.id.phone);
         passwd = (EditText)findViewById(R.id.Password);
@@ -54,7 +54,7 @@ public class register_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String n = name.getText().toString().trim();
-                final String no = nmorg.getText().toString().trim();
+
                 final String ph = phone.getText().toString().trim();
                 String e = email.getText().toString().trim();
                 String pd = passwd.getText().toString();
@@ -75,10 +75,7 @@ public class register_page extends AppCompatActivity {
                     f = 1;
                 }
 
-                if(TextUtils.isEmpty(no)) {
-                    nmorg.setError("Name of Organization is required");
-                    f = 1;
-                }
+
 
                 if(pd.length() < 7){
                     passwd.setError("Password must be atleast 8 characters");
@@ -109,7 +106,7 @@ public class register_page extends AppCompatActivity {
                             Map<String, Object> u = new HashMap<>();
                             u.put("Userid", Userid);
                             u.put("Full Name", n);
-                            u.put("Organization", no);
+
                             u.put("Contact", ph);
                             user.child(uid).setValue(u);
                             Toast.makeText(register_page.this, "User Created", Toast.LENGTH_SHORT).show();

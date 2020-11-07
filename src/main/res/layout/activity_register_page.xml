@@ -13,13 +13,14 @@
         android:id="@+id/scroll"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_marginBottom="16dp"
         android:padding="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="8dp">
@@ -56,17 +57,6 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Full Name"
-                android:inputType="textPersonName"
-                android:padding="10dp"
-                android:textColorHint="#FCF4F2F2" />
-
-            <EditText
-                android:id="@+id/organization"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:ems="10"
-                android:hint="Name of Organization"
                 android:inputType="textPersonName"
                 android:padding="10dp"
                 android:textColorHint="#FCF4F2F2" />
