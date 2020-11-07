@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class register_page extends AppCompatActivity {
     EditText name, email, phone, passwd, cnpasswd;
@@ -87,14 +88,23 @@ public class register_page extends AppCompatActivity {
                     f = 1;
                 }
                 
+                if(!Pattern.matches("[a-zA-Z]+", ph)){
+                    if(ph.length() < 10 && ph.length() > 12)
+                    {
+                        phone.setError("Invalid Email");
+                        f = 1;
+                    }
+
+                }
+
                 if(!Patterns.EMAIL_ADDRESS.matcher(e).matches()){
-                    email.setError("Invalid Email"); 
+                    email.setError("Invalid Email");
                     f = 1;
                 }
-                
                 if (f == 1) {
                     return;
                 }
+
                 fAuth.createUserWithEmailAndPassword(e, pd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -104,11 +114,12 @@ public class register_page extends AppCompatActivity {
                             String uid = user.push().getKey();
                             startActivity(new Intent(getApplicationContext(), login_page.class));
                             Map<String, Object> u = new HashMap<>();
-                            u.put("Userid", Userid);
+                            //u.put("Userid", Userid);
                             u.put("Full Name", n);
 
                             u.put("Contact", ph);
-                            user.child(uid).setValue(u);
+                            u.put("times",0);
+                            user.child(Userid).setValue(u);
                             Toast.makeText(register_page.this, "User Created", Toast.LENGTH_SHORT).show();
                         }
                         else {
