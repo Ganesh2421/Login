@@ -118,7 +118,7 @@ public class register_page extends AppCompatActivity {
                             u.put("Full Name", n);
 
                             u.put("Contact", ph);
-                            u.put("times",0);
+                            u.put("times","A");
                             user.child(Userid).setValue(u);
                             Toast.makeText(register_page.this, "User Created", Toast.LENGTH_SHORT).show();
                         }

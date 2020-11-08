@@ -2,6 +2,7 @@ package com.example.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,20 +29,22 @@ public class MainActivity extends AppCompatActivity {
     EditText Phone1,  Phone2,  Phone3,  Phone4;
     Button Submit;
     String User;
-
+    String times = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         pauth = FirebaseAuth.getInstance();
         User = pauth.getCurrentUser().getUid();
-        user = FirebaseDatabase.getInstance().getReference().child("User");
+        user = FirebaseDatabase.getInstance().getReference();
+
         user.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int times = snapshot.child(User).child("times").getValue(int.class);
-                if(times == 0)
-                {
+                times = snapshot.child("User").child(User).child("times").getValue(String.class);
+                Log.d("t",times);
+                if(times.equals("A"))
+                {Log.d("t","Fetch");
                     Phone1 = findViewById(R.id.Phone1);
                     Phone2 = findViewById(R.id.Phone2);
                     Phone3 = findViewById(R.id.Phone3);
@@ -99,14 +102,14 @@ public class MainActivity extends AppCompatActivity {
                                 //String uid = user.push().getKey();
                                 Map<String, Object> u = new HashMap<>();
                                 //u.put("Userid", Userid);
-                                u.put("Emergency_Contact1", ph1);
+                                user.child("User").child(User).child("times").setValue("B");
+                                user.child("User").child(User).child("Emergency_Contact1").setValue(ph1);
 
-                                u.put("Emergency_Contact2", ph2);
-                                u.put("Emergency_Contact3", ph3);
-                                u.put("Emergency_Contact4", ph4);
-                                user.child(User).child("times").setValue(1);
-                                user.child(User).setValue(u);
+                                user.child("User").child(User).child("Emergency_Contact2").setValue(ph2);
+                                user.child("User").child(User).child("Emergency_Contact3").setValue(ph3);
+                                user.child("User").child(User).child("Emergency_Contact4").setValue(ph4);
 
+                                times = "B";
                                 Toast.makeText(MainActivity.this, "Data Updated", Toast.LENGTH_SHORT).show();
 
                             }
@@ -114,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
+                if(times.equals("B"))
+                {startActivity(new Intent(getApplicationContext(), dashboard.class));
+                    finish();}
+
 
             }
 
@@ -123,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        startActivity(new Intent(getApplicationContext(), dashboard.class));
+
     }
 
     @Override

@@ -17,6 +17,9 @@ public class dashboard extends AppCompatActivity {
     }
     public void logout_click(View view) {
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(), login_page.class));
+        Intent intent = new Intent(this, login_page.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }
